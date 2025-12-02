@@ -13,7 +13,7 @@ object RegistrationUtil {
 //
 
     // isn't empty
-    // already taken
+    // not already taken
     // minimum number of characters is 3
     fun validateUsername(username: String) : Boolean {
         return true
