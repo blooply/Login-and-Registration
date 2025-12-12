@@ -1,6 +1,8 @@
 package com.example.loginandregistration
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,5 +23,31 @@ class RegistrationActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val username = intent.getStringExtra(LoginActivity.EXTRA_USERNAME) ?: ""
+        val password = intent.getStringExtra(LoginActivity.EXTRA_PASSWORD) ?: ""
+
+        binding.editTextRegistrationUsername.setText(username)
+        binding.editTextTextPassword.setText(password)
+
+        binding.buttonRegistrationRegister.setOnClickListener {
+            // if using RegistrationUtil everything checks out Ok...
+            if (!RegistrationUtil.validateName(binding.editTextRegistrationName.text.toString())) {
+                Toast.makeText(this, "Invalid Name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!RegistrationUtil.validateUsername(binding.editTextRegistrationUsername.text.toString())) {
+                Toast.makeText(this, "Invalid Username", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val intent = Intent()
+            intent.putExtra(LoginActivity.EXTRA_USERNAME, binding.editTextRegistrationUsername.text.toString())
+            intent.putExtra(LoginActivity.EXTRA_PASSWORD, binding.editTextTextPassword.text.toString())
+            setResult(RESULT_OK, intent)
+            finish()
+        }
+
     }
 }

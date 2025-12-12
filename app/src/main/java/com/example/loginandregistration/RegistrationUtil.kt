@@ -5,8 +5,8 @@ package com.example.loginandregistration
 object RegistrationUtil {
     // use this in the test class for the is username taken test
     // make another similar list for some taken emails
+    private var existingUsers = listOf("cosmicF", "cosmicY", "bob", "alice")
     private var existingEmails = listOf("awidjw@gmail.com", "aoiwjd@yahoo.com")
-    private var existingUsers = listOf("cosmicF", "cosmicY", "itusi", "alice")
     // you can use listOf<type>() instead of making the list & adding individually
     // List<String> blah = new ArrayList<String>();
     // blah.add("hi")
