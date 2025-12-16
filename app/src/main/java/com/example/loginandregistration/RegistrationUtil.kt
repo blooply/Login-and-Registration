@@ -11,13 +11,12 @@ object RegistrationUtil {
     // List<String> blah = new ArrayList<String>();
     // blah.add("hi")
     // blah.add("hello")
-    //
 
     // isn't empty
     // not already taken
     // minimum number of characters is 3
-    fun validateUsername(username: String) : Boolean {
-        return username.length > 2 && !existingUsers.contains(username)
+    fun validateUsername(username: String): Boolean {
+        return username.length >= 3 && !existingUsers.any{it.equals(username, ignoreCase = true)} && !username.any{it.isWhitespace()}
     }
 
     // make sure meets security requirements (deprecated ones that are still used everywhere)
@@ -26,19 +25,28 @@ object RegistrationUtil {
     // at least one capital letter
     // both passwords match
     // not empty
-    fun validatePassword(password : String, confirmPassword: String) : Boolean {
-        return (password == confirmPassword && password.length > 7 && password.any{it.isUpperCase()} && password.any{it.isDigit()})
+    fun validatePassword(password: String, confirmPassword: String): Boolean {
+        return (password == confirmPassword && password.length >= 8 && password.any{it.isUpperCase()} && password.any{it.isDigit()} && !password.any{it.isWhitespace()})
     }
 
     // isn't empty
-    fun validateName(name: String) : Boolean {
+    fun validateName(name: String): Boolean {
         return name.isNotEmpty()
     }
 
     // isn't empty
     // make sure the email isn't used
     // make sure it's in the proper email format user@domain.tld
-    fun validateEmail(email: String) : Boolean {
-        return email != null && email.isNotEmpty() && !existingEmails.contains(email) && email.indexOf("@") > 0 && email.indexOf(".") > email.indexOf("@") + 1 && email.indexOf(".") == email.lastIndexOf(".") && email.indexOf(".") < email.length - 1
+    fun validateEmail(email: String): Boolean {
+        if (email.length < 5 || existingEmails.any{it.equals(email, ignoreCase = true)} || email.any{it.isWhitespace()})
+            return false
+
+        val atIndex = email.indexOf("@")
+        val dotIndex = email.lastIndexOf(".")
+
+        if (atIndex != email.lastIndexOf("@") || dotIndex != email.lastIndexOf("."))
+            return false
+
+        return atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length - 1
     }
 }
