@@ -6,7 +6,7 @@ object RegistrationUtil {
     // use this in the test class for the is username taken test
     // make another similar list for some taken emails
     private var existingUsers = listOf("cosmicF", "cosmicY", "bob", "alice")
-    private var existingEmails = listOf("awidjw@gmail.com", "aoiwjd@yahoo.com")
+    private var existingEmails = listOf("og_john_smith@gmail.com", "real.jane.doe@yahoo.com")
     // you can use listOf<type>() instead of making the list & adding individually
     // List<String> blah = new ArrayList<String>();
     // blah.add("hi")
@@ -42,11 +42,11 @@ object RegistrationUtil {
             return false
 
         val atIndex = email.indexOf("@")
-        val dotIndex = email.lastIndexOf(".")
+        val dotIndex = email.substring(atIndex).indexOf(".")
 
         if (atIndex != email.lastIndexOf("@") || dotIndex != email.lastIndexOf("."))
             return false
 
-        return atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length - 1
+        return email[0] != '.' && atIndex > 0 && email[atIndex - 1] != '.' && dotIndex > atIndex + 1 && dotIndex < email.length - 1
     }
 }
