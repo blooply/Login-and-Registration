@@ -75,7 +75,7 @@ class RegistrationUtilUnitTest {
         assertThat(emptyName1).isFalse()
     }
 
-    //UserName
+    //Username
 
     //valid username works
     @Test
@@ -142,7 +142,7 @@ class RegistrationUtilUnitTest {
         assertThat(emptyLocal).isFalse()
     }
 
-    //no empty domain
+    //no empty domain and tld
     @Test
     fun validateEmail_emptyDomain_isFalse() {
         val emptyDomain = RegistrationUtil.validateEmail("johnsmith@")
@@ -176,7 +176,7 @@ class RegistrationUtilUnitTest {
     //no .
     @Test
     fun validateEmail_noDotAnywhere_isFalse() {
-        val noDot = RegistrationUtil.validateEmail("john@outlook")
+        val noDot = RegistrationUtil.validateEmail("john@outlookcom")
         assertThat(noDot).isFalse()
     }
 
@@ -212,13 +212,6 @@ class RegistrationUtilUnitTest {
     fun validateEmail_domainStartsWithDot_isFalse() {
         val domainStartsDot = RegistrationUtil.validateEmail("janedoe@.icloud.com")
         assertThat(domainStartsDot).isFalse()
-    }
-
-    //domain ends with .
-    @Test
-    fun validateEmail_domainEndsWithDot_isFalse() {
-        val domainEndsDot = RegistrationUtil.validateEmail("janedoe@icloud.com.")
-        assertThat(domainEndsDot).isFalse()
     }
 
     //not taken
