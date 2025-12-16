@@ -31,7 +31,7 @@ class RegistrationActivity : AppCompatActivity() {
         binding.editTextTextPassword.setText(password)
 
         binding.buttonRegistrationRegister.setOnClickListener {
-            // if using RegistrationUtil everything checks out Ok...
+
             if (!RegistrationUtil.validateName(binding.editTextRegistrationName.text.toString())) {
                 Toast.makeText(this, "Invalid Name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -42,12 +42,22 @@ class RegistrationActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            if (!RegistrationUtil.validatePassword(binding.editTextTextPassword.text.toString(), binding.editTextRegistrationConfirmPassword.text.toString())) {
+                Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!RegistrationUtil.validateEmail(binding.editTextRegistrationEmail.text.toString())) {
+                Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val intent = Intent()
             intent.putExtra(LoginActivity.EXTRA_USERNAME, binding.editTextRegistrationUsername.text.toString())
             intent.putExtra(LoginActivity.EXTRA_PASSWORD, binding.editTextTextPassword.text.toString())
             setResult(RESULT_OK, intent)
             finish()
-        }
 
+        }
     }
 }

@@ -13,6 +13,11 @@ object RegistrationUtil {
     // blah.add("hello")
 
     // isn't empty
+    fun validateName(name: String): Boolean {
+        return name.isNotEmpty()
+    }
+
+    // isn't empty
     // not already taken
     // minimum number of characters is 3
     fun validateUsername(username: String): Boolean {
@@ -30,11 +35,6 @@ object RegistrationUtil {
     }
 
     // isn't empty
-    fun validateName(name: String): Boolean {
-        return name.isNotEmpty()
-    }
-
-    // isn't empty
     // make sure the email isn't used
     // make sure it's in the proper email format user@domain.tld
     fun validateEmail(email: String): Boolean {
@@ -42,11 +42,15 @@ object RegistrationUtil {
             return false
 
         val atIndex = email.indexOf("@")
-        val dotIndex = email.substring(atIndex).indexOf(".")
+
+        if (atIndex <= 0)
+            return false
+
+        val dotIndex = email.substring(atIndex).indexOf(".") + email.substring(0, atIndex).length
 
         if (atIndex != email.lastIndexOf("@") || dotIndex != email.lastIndexOf("."))
             return false
 
-        return email[0] != '.' && atIndex > 0 && email[atIndex - 1] != '.' && dotIndex > atIndex + 1 && dotIndex < email.length - 1
+        return email[0] != '.' && email[atIndex - 1] != '.' && dotIndex > atIndex + 1 && dotIndex < email.length - 1
     }
 }
